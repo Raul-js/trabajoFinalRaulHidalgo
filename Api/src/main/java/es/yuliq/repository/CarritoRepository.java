@@ -28,4 +28,6 @@ public interface CarritoRepository extends JpaRepository<Carrito, Long>, JpaSpec
 
     @Query("select carrito from Carrito carrito left join fetch carrito.productos where carrito.id =:id")
     Optional<Carrito> findOneWithEagerRelationships(@Param("id") Long id);
+
+
 }

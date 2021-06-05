@@ -12,9 +12,14 @@ h1,
 h2,
 h3,
 h4 {
-  font-weight: 300;
-}
+  font-weight: bolder;
 
+  color: #000;
+  font-style: italic;
+}
+body {
+  background-image: url('../../../webapp/swagger-ui/dist/images/tickets_restaurant-2-920x385.jpg');
+}
 a:hover {
   /* make sure browsers use the pointer cursor for anchors, even with no href */
   cursor: pointer;
@@ -22,6 +27,9 @@ a:hover {
 
 .dropdown-item:hover {
   color: $dropdown-link-hover-color;
+}
+button {
+  background-color: #f03c01;
 }
 
 /* ==========================================================================
@@ -75,6 +83,7 @@ Generic styles
 
 .footer {
   border-top: 1px solid rgba(0, 0, 0, 0.125);
+  background-color: brown;
 }
 
 .hand,

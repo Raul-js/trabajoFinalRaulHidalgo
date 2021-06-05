@@ -86,7 +86,7 @@ public class CarritoResource {
         @PathVariable(value = "id", required = false) final Long id,
         @RequestBody CarritoDTO carritoDTO
     ) throws URISyntaxException {
-        log.debug("REST request to update Carrito : {}, {}", id, carritoDTO);
+        log.debug("REST request to update Carrito : {}, {}", id, (Object) carritoDTO);
         if (carritoDTO.getId() == null) {
             throw new BadRequestAlertException("Invalid id", ENTITY_NAME, "idnull");
         }
@@ -104,7 +104,19 @@ public class CarritoResource {
             .headers(HeaderUtil.createEntityUpdateAlert(applicationName, true, ENTITY_NAME, carritoDTO.getId().toString()))
             .body(result);
     }
-
+    /*
+         @PutMapping("/addCarrito")
+         public ResponseEntity<CarritoDTO> addToCarrito(@RequestBody ProductoDTO productodto) {
+             Producto producto = productoMapper.toEntity(productodto);
+             Optional<String> us = SecurityUtils.getCurrentUserLogin();
+             User user = this.userRepository.findOneByLogin(us.get()).get();
+             Carrito ownCarrito = new Carrito();
+             ownCarrito = this.carritoRepository.findByUsuarioId(user.getId());
+             ownCarrito.addProducto(producto);
+             CarritoDTO carritoDTO = carritoMapper.toDto(ownCarrito);
+             CarritoDTO result = carritoService.save(carritoDTO);
+             return ResponseEntity.ok().body(result);
+         }*/
     /**
      * {@code PATCH  /carritos/:id} : Partial updates given fields of an existing carrito, field will ignore if it is null
      *
