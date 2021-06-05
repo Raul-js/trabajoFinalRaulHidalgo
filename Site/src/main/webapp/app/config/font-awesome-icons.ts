@@ -43,6 +43,7 @@ import {
 export const fontAwesomeIcons = [
   faArrowLeft,
   faAsterisk,
+
   faBan,
   faBars,
   faBell,
