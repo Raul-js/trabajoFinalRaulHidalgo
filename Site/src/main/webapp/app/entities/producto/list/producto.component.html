@@ -24,6 +24,41 @@
 
   <jhi-alert></jhi-alert>
 
+  <div class="card">
+    <div class="card-header">
+      <div class="row align-items-baseline" [ngClass]="{ 'is-last-child': areFiltersCollapsed }">
+        <div class="col-5">
+          <span>Filtros</span>
+          <fa-icon style="color: #6aaadf" *ngIf="!isFiltring" [icon]="'filter'"></fa-icon>
+          <fa-icon style="color: white" *ngIf="isFiltring" [icon]="'filter'"></fa-icon>
+        </div>
+
+        <div class="col-7 d-flex justify-content-end">
+          <button type="button" *ngIf="!areFiltersCollapsed" class="btn btn-filtrar" (click)="filter()">Filtrar</button>
+          <button type="button" *ngIf="!areFiltersCollapsed" class="btn btn-limpiar" (click)="resetFilter()" [disabled]="!isFiltring">
+            Clean
+          </button>
+          <button type="button" class="btn btn-filtro" *ngIf="areFiltersCollapsed" (click)="areFiltersCollapsed = false">
+            <fa-icon [icon]="'arrow-down'"></fa-icon>
+          </button>
+          <button type="button" *ngIf="!areFiltersCollapsed" class="btn btn-filtro" (click)="areFiltersCollapsed = true">
+            <fa-icon [icon]="'arrow-up'"></fa-icon>
+          </button>
+        </div>
+      </div>
+    </div>
+    <div class="card-body" [ngbCollapse]="areFiltersCollapsed">
+      <form name="filterform" role="form" novalidate [formGroup]="filterForm" class="busqueda">
+        <div class="row align-items-end">
+          <div class="col-md-4">
+            <label class="form-control-label" for="nombre"><span jhiTranslate="yuliqApp.producto.nombreProducto">Name</span></label>
+            <input type="text" class="form-control" id="nombre" formControlName="nombre" />
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+
   <div class="alert alert-warning" id="no-result" *ngIf="productos?.length === 0">
     <span jhiTranslate="yuliqApp.producto.home.notFound">No productos found</span>
   </div>
