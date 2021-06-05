@@ -9,6 +9,9 @@ import { IFactura } from '../factura.model';
 import { ITEMS_PER_PAGE } from 'app/config/pagination.constants';
 import { FacturaService } from '../service/factura.service';
 import { FacturaDeleteDialogComponent } from '../delete/factura-delete-dialog.component';
+import { FormBuilder } from '@angular/forms';
+import { FacturaFilter } from './factura-filter.model';
+import { IUser } from 'app/entities/user/user.model';
 
 @Component({
   selector: 'jhi-factura',
@@ -23,13 +26,40 @@ export class FacturaComponent implements OnInit {
   predicate!: string;
   ascending!: boolean;
   ngbPaginationPage = 1;
+  isFiltring = false;
+  areFiltersCollapsed = true;
+
+  filterForm = this.fb.group({
+    nombre: [''],
+    field_dateFrom: [null],
+    field_dateto: [null],
+    id: [''],
+  });
+  filtros: FacturaFilter = new FacturaFilter();
+  facturasSharedCollection: IFactura[] = [];
 
   constructor(
     protected facturaService: FacturaService,
     protected activatedRoute: ActivatedRoute,
     protected router: Router,
-    protected modalService: NgbModal
+    protected modalService: NgbModal,
+    protected fb: FormBuilder
   ) {}
+  filter(): void {
+    this.isFiltring = true;
+    this.createFilterFromForm();
+    this.loadPage(1, true);
+
+    /*eslint-disable*/
+  }
+  resetFilter(): void {
+    this.isFiltring = false;
+    this.filterForm.reset();
+    this.loadPage();
+  }
+  clear(): void {
+    this.resetFilter();
+  }
 
   loadPage(page?: number, dontNavigate?: boolean): void {
     this.isLoading = true;
@@ -37,6 +67,7 @@ export class FacturaComponent implements OnInit {
 
     this.facturaService
       .query({
+        filter: this.filtros.toMap(),
         page: pageToLoad - 1,
         size: this.itemsPerPage,
         sort: this.sort(),
@@ -113,5 +144,10 @@ export class FacturaComponent implements OnInit {
 
   protected onError(): void {
     this.ngbPaginationPage = this.page ?? 1;
+  }
+  private createFilterFromForm(): void {
+    this.filtros.field_dateFrom = this.filterForm.get(['field_dateFrom'])?.value;
+    this.filtros.id = this.filterForm.get(['id'])?.value;
+    this.filtros.field_dateto = this.filterForm.get(['field_dateto'])?.value;
   }
 }
