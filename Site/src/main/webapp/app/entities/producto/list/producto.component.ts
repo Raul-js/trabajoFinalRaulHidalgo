@@ -10,6 +10,8 @@ import { ITEMS_PER_PAGE } from 'app/config/pagination.constants';
 import { ProductoService } from '../service/producto.service';
 import { ProductoDeleteDialogComponent } from '../delete/producto-delete-dialog.component';
 import { DataUtils } from 'app/core/util/data-util.service';
+import { ProductoFilter } from './producto-filter.model';
+import { FormBuilder } from '@angular/forms';
 
 @Component({
   selector: 'jhi-producto',
@@ -24,14 +26,42 @@ export class ProductoComponent implements OnInit {
   predicate!: string;
   ascending!: boolean;
   ngbPaginationPage = 1;
+  isFiltring = false;
+  areFiltersCollapsed = true;
+  filterForm = this.fb.group({
+    nombre: [],
+    calorias: [],
+    precio: [],
+    tipo: [],
+    existencias: [],
+  });
+  filtros: ProductoFilter = new ProductoFilter();
+  productosSharedCollection: IProducto[] = [];
 
   constructor(
     protected productoService: ProductoService,
     protected activatedRoute: ActivatedRoute,
     protected dataUtils: DataUtils,
     protected router: Router,
-    protected modalService: NgbModal
+    protected modalService: NgbModal,
+    protected fb: FormBuilder
   ) {}
+
+  filter(): void {
+    this.isFiltring = true;
+    this.createFilterFromForm();
+    this.loadPage(1, true);
+
+    /*eslint-disable*/
+  }
+  resetFilter(): void {
+    this.isFiltring = false;
+    this.filterForm.reset();
+    this.loadPage();
+  }
+  clear(): void {
+    this.resetFilter();
+  }
 
   loadPage(page?: number, dontNavigate?: boolean): void {
     this.isLoading = true;
@@ -39,6 +69,7 @@ export class ProductoComponent implements OnInit {
 
     this.productoService
       .query({
+        filter: this.filtros.toMap(),
         page: pageToLoad - 1,
         size: this.itemsPerPage,
         sort: this.sort(),
@@ -123,5 +154,12 @@ export class ProductoComponent implements OnInit {
 
   protected onError(): void {
     this.ngbPaginationPage = this.page ?? 1;
+  }
+  private createFilterFromForm(): void {
+    this.filtros.nombre = this.filterForm.get(['nombre'])?.value;
+    this.filtros.calorias = this.filterForm.get(['calorias'])?.value;
+    this.filtros.precio = this.filterForm.get(['precio'])?.value;
+    this.filtros.tipo = this.filterForm.get(['tipo'])?.value;
+    this.filtros.existencias = this.filterForm.get(['existencias'])?.value;
   }
 }
