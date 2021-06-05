@@ -41,6 +41,8 @@
     "clientPackageManager": "npm",
     "clientTheme": "none",
     "clientThemeVariant": "",
-    "withAdminUi": true
+    "withAdminUi": true,
+    "entities": ["Producto", "Banner", "Carrito", "Factura", "Compra"],
+    "lastLiquibaseTimestamp": 1622891493000
   }
 }

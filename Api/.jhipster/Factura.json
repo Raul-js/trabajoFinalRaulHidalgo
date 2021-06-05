@@ -1,0 +1,38 @@
+{
+  "name": "Factura",
+  "fields": [
+    {
+      "fieldName": "fechaFactura",
+      "fieldType": "Instant"
+    },
+    {
+      "fieldName": "cantidadPagada",
+      "fieldType": "Integer"
+    }
+  ],
+  "relationships": [
+    {
+      "relationshipType": "one-to-many",
+      "otherEntityName": "compra",
+      "otherEntityRelationshipName": "factura",
+      "relationshipName": "compra"
+    },
+    {
+      "relationshipType": "many-to-one",
+      "otherEntityName": "user",
+      "otherEntityRelationshipName": "factura",
+      "relationshipName": "assignedTo",
+      "otherEntityField": "login"
+    }
+  ],
+  "entityTableName": "factura",
+  "dto": "mapstruct",
+  "pagination": "pagination",
+  "service": "serviceImpl",
+  "jpaMetamodelFiltering": true,
+  "fluentMethods": true,
+  "readOnly": false,
+  "embedded": false,
+  "applications": "*",
+  "changelogDate": "20210605111132"
+}

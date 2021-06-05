@@ -1,0 +1,62 @@
+entity Producto {
+	
+    nombreProducto String required maxlength(250),
+    calorias Integer max(1000),
+    imagen Blob maxbytes(20000000),
+    precio Float required max(200),
+    existencias Integer required max(50),
+    tipoproducto TipoProducto
+    
+}
+
+enum TipoProducto {
+	ENTRANTE,
+    PRINCIPAL,
+    POSTRE,
+    BEBIDA
+}
+
+entity Banner{
+ imagen Blob maxbytes(20000000),
+ fechaPuesta Instant required
+}
+entity Carrito {
+	cantidad Integer,
+    fechaCarrito Instant
+}
+
+
+
+entity Factura{
+   fechaFactura Instant,
+   cantidadPagada Integer
+}
+
+entity Compra{
+    cantidadComprada Integer,
+    precioPagado Float
+}
+
+
+relationship OneToMany{
+     Factura{compra} to Compra{factura}
+}
+
+
+relationship ManyToMany {
+	Carrito{producto} to Producto{carrito}
+}
+
+relationship ManyToOne {
+    Carrito{assignedTo(login)} to User
+    Factura{assignedTo(login)} to User
+    Producto{compra} to Compra
+}
+
+
+
+dto * with mapstruct
+service all with serviceImpl
+paginate all with pagination
+filter all
+

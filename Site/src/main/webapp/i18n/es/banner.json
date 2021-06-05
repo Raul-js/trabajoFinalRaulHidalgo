@@ -1,0 +1,25 @@
+{
+  "yuliqApp": {
+    "banner": {
+      "home": {
+        "title": "Banners",
+        "refreshListLabel": "Refrescar lista",
+        "createLabel": "Crear nuevo Banner",
+        "createOrEditLabel": "Crear o editar Banner",
+        "notFound": "Ningún Banners encontrado"
+      },
+      "created": "Un nuevo Banner ha sido creado con el identificador {{ param }}",
+      "updated": "Un Banner ha sido actualizado con el identificador {{ param }}",
+      "deleted": "Un Banner ha sido eliminado con el identificador {{ param }}",
+      "delete": {
+        "question": "¿Seguro que quiere eliminar Banner {{ id }}?"
+      },
+      "detail": {
+        "title": "Banner"
+      },
+      "id": "ID",
+      "imagen": "Imagen",
+      "fechaPuesta": "Fecha Puesta"
+    }
+  }
+}

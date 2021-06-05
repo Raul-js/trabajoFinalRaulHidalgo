@@ -1,0 +1,11 @@
+{
+  "yuliqApp": {
+    "TipoProducto": {
+      "null": "",
+      "ENTRANTE": "ENTRANTE",
+      "PRINCIPAL": "PRINCIPAL",
+      "POSTRE": "POSTRE",
+      "BEBIDA": "BEBIDA"
+    }
+  }
+}
