@@ -25,7 +25,8 @@
       "existencias": "Existencias",
       "tipoproducto": "Tipoproducto",
       "compra": "Compra",
-      "carrito": "Carrito"
+      "carrito": "Carrito",
+      "clean": "Limpiar"
     }
   }
 }

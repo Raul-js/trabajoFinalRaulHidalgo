@@ -30,9 +30,14 @@ export class ProductoComponent implements OnInit {
   areFiltersCollapsed = true;
   filterForm = this.fb.group({
     nombre: [],
+    calorias: [],
+    precio: [],
+    tipo: [],
+    existencias: [],
   });
   filtros: ProductoFilter = new ProductoFilter();
   productosSharedCollection: IProducto[] = [];
+
   constructor(
     protected productoService: ProductoService,
     protected activatedRoute: ActivatedRoute,
@@ -152,5 +157,9 @@ export class ProductoComponent implements OnInit {
   }
   private createFilterFromForm(): void {
     this.filtros.nombre = this.filterForm.get(['nombre'])?.value;
+    this.filtros.calorias = this.filterForm.get(['calorias'])?.value;
+    this.filtros.precio = this.filterForm.get(['precio'])?.value;
+    this.filtros.tipo = this.filterForm.get(['tipo'])?.value;
+    this.filtros.existencias = this.filterForm.get(['existencias'])?.value;
   }
 }
