@@ -1,0 +1,11 @@
+id;nombre_producto;calorias;imagen;imagen_content_type;precio;existencias;tipoproducto
+1;actitud;222;../fake-data/blob/hipster.png;image/png;181;10;BEBIDA
+2;complejidad Buckinghamshire Morado;245;../fake-data/blob/hipster.png;image/png;163;24;POSTRE
+3;GB Rústico SDD;193;../fake-data/blob/hipster.png;image/png;126;9;PRINCIPAL
+4;sensor Dinánmico;481;../fake-data/blob/hipster.png;image/png;32;27;ENTRANTE
+5;Zapatos Datos;321;../fake-data/blob/hipster.png;image/png;17;0;PRINCIPAL
+6;back-end Gorro Camerún;440;../fake-data/blob/hipster.png;image/png;71;38;POSTRE
+7;microchip compress ROI;666;../fake-data/blob/hipster.png;image/png;107;11;PRINCIPAL
+8;Innovador objetos invoice;68;../fake-data/blob/hipster.png;image/png;95;17;ENTRANTE
+9;innovative Seguro;447;../fake-data/blob/hipster.png;image/png;185;32;PRINCIPAL
+10;Navarra;549;../fake-data/blob/hipster.png;image/png;187;10;PRINCIPAL

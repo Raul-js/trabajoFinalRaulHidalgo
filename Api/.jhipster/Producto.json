@@ -1,0 +1,66 @@
+{
+  "name": "Producto",
+  "fields": [
+    {
+      "fieldName": "nombreProducto",
+      "fieldType": "String",
+      "fieldValidateRules": ["required", "maxlength"],
+      "fieldValidateRulesMaxlength": "250"
+    },
+    {
+      "fieldName": "calorias",
+      "fieldType": "Integer",
+      "fieldValidateRules": ["max"],
+      "fieldValidateRulesMax": "1000"
+    },
+    {
+      "fieldName": "imagen",
+      "fieldType": "byte[]",
+      "fieldTypeBlobContent": "any",
+      "fieldValidateRules": ["maxbytes"],
+      "fieldValidateRulesMaxbytes": "20000000"
+    },
+    {
+      "fieldName": "precio",
+      "fieldType": "Float",
+      "fieldValidateRules": ["required", "max"],
+      "fieldValidateRulesMax": "200"
+    },
+    {
+      "fieldName": "existencias",
+      "fieldType": "Integer",
+      "fieldValidateRules": ["required", "max"],
+      "fieldValidateRulesMax": "50"
+    },
+    {
+      "fieldName": "tipoproducto",
+      "fieldType": "TipoProducto",
+      "fieldValues": "ENTRANTE,PRINCIPAL,POSTRE,BEBIDA"
+    }
+  ],
+  "relationships": [
+    {
+      "relationshipType": "many-to-one",
+      "otherEntityName": "compra",
+      "otherEntityRelationshipName": "producto",
+      "relationshipName": "compra"
+    },
+    {
+      "relationshipType": "many-to-many",
+      "otherEntityName": "carrito",
+      "otherEntityRelationshipName": "producto",
+      "relationshipName": "carrito",
+      "ownerSide": false
+    }
+  ],
+  "entityTableName": "producto",
+  "dto": "mapstruct",
+  "pagination": "pagination",
+  "service": "serviceImpl",
+  "jpaMetamodelFiltering": true,
+  "fluentMethods": true,
+  "readOnly": false,
+  "embedded": false,
+  "applications": "*",
+  "changelogDate": "20210605111129"
+}

@@ -1,0 +1,73 @@
+<div class="row justify-content-center">
+  <div class="col-8">
+    <form name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editForm">
+      <h2 id="jhi-compra-heading" data-cy="CompraCreateUpdateHeading" jhiTranslate="yuliqApp.compra.home.createOrEditLabel">
+        Create or edit a Compra
+      </h2>
+
+      <div>
+        <jhi-alert-error></jhi-alert-error>
+
+        <div class="form-group" [hidden]="editForm.get('id')!.value == null">
+          <label class="form-control-label" jhiTranslate="global.field.id" for="field_id">ID</label>
+          <input type="number" class="form-control" name="id" id="field_id" data-cy="id" formControlName="id" [readonly]="true" />
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" jhiTranslate="yuliqApp.compra.cantidadComprada" for="field_cantidadComprada"
+            >Cantidad Comprada</label
+          >
+          <input
+            type="number"
+            class="form-control"
+            name="cantidadComprada"
+            id="field_cantidadComprada"
+            data-cy="cantidadComprada"
+            formControlName="cantidadComprada"
+          />
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" jhiTranslate="yuliqApp.compra.precioPagado" for="field_precioPagado">Precio Pagado</label>
+          <input
+            type="number"
+            class="form-control"
+            name="precioPagado"
+            id="field_precioPagado"
+            data-cy="precioPagado"
+            formControlName="precioPagado"
+          />
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" jhiTranslate="yuliqApp.compra.factura" for="field_factura">Factura</label>
+          <select class="form-control" id="field_factura" data-cy="factura" name="factura" formControlName="factura">
+            <option [ngValue]="null"></option>
+            <option
+              [ngValue]="facturaOption.id === editForm.get('factura')!.value?.id ? editForm.get('factura')!.value : facturaOption"
+              *ngFor="let facturaOption of facturasSharedCollection; trackBy: trackFacturaById"
+            >
+              {{ facturaOption.id }}
+            </option>
+          </select>
+        </div>
+      </div>
+
+      <div>
+        <button type="button" id="cancel-save" class="btn btn-secondary" (click)="previousState()">
+          <fa-icon icon="ban"></fa-icon>&nbsp;<span jhiTranslate="entity.action.cancel">Cancel</span>
+        </button>
+
+        <button
+          type="submit"
+          id="save-entity"
+          data-cy="entityCreateSaveButton"
+          [disabled]="editForm.invalid || isSaving"
+          class="btn btn-primary"
+        >
+          <fa-icon icon="save"></fa-icon>&nbsp;<span jhiTranslate="entity.action.save">Save</span>
+        </button>
+      </div>
+    </form>
+  </div>
+</div>
