@@ -35,6 +35,8 @@ export class ProductoComponent implements OnInit {
     tipo: [],
     existencias: [],
   });
+  cols?: any[];
+  exportColumns?: any[];
   filtros: ProductoFilter = new ProductoFilter();
   productosSharedCollection: IProducto[] = [];
 
@@ -88,8 +90,24 @@ export class ProductoComponent implements OnInit {
 
   ngOnInit(): void {
     this.handleNavigation();
+    this.cols = [
+      { field: 'nombreProducto', header: 'nombre' },
+      { field: 'precio', header: 'Precio' },
+      { field: 'existencias', header: 'existencias' },
+      { field: 'calorias', header: 'Calorias' },
+    ];
+    this.exportColumns = this.cols.map(col => ({ title: col.header, dataKey: col.field }));
   }
 
+  exportPdf() {
+    import('jspdf').then(jsPDF => {
+      import('jspdf-autotable').then(x => {
+        const doc = new jsPDF.default();
+        (doc as any).autoTable(this.exportColumns, this.productos);
+        doc.save('productos.pdf');
+      });
+    });
+  }
   trackId(index: number, item: IProducto): number {
     return item.id!;
   }
