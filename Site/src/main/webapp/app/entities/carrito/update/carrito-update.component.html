@@ -1,0 +1,79 @@
+<div class="row justify-content-center">
+  <div class="col-8">
+    <form name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editForm">
+      <h2 id="jhi-carrito-heading" data-cy="CarritoCreateUpdateHeading" jhiTranslate="yuliqApp.carrito.home.createOrEditLabel">
+        Create or edit a Carrito
+      </h2>
+
+      <div>
+        <jhi-alert-error></jhi-alert-error>
+
+        <div class="form-group" [hidden]="editForm.get('id')!.value == null">
+          <label class="form-control-label" jhiTranslate="global.field.id" for="field_id">ID</label>
+          <input type="number" class="form-control" name="id" id="field_id" data-cy="id" formControlName="id" [readonly]="true" />
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" jhiTranslate="yuliqApp.carrito.cantidad" for="field_cantidad">Cantidad</label>
+          <input type="number" class="form-control" name="cantidad" id="field_cantidad" data-cy="cantidad" formControlName="cantidad" />
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" jhiTranslate="yuliqApp.carrito.fechaCarrito" for="field_fechaCarrito">Fecha Carrito</label>
+          <div class="d-flex">
+            <input
+              id="field_fechaCarrito"
+              data-cy="fechaCarrito"
+              type="datetime-local"
+              class="form-control"
+              name="fechaCarrito"
+              formControlName="fechaCarrito"
+              placeholder="YYYY-MM-DD HH:mm"
+            />
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" jhiTranslate="yuliqApp.carrito.assignedTo" for="field_assignedTo">Assigned To</label>
+          <select class="form-control" id="field_assignedTo" data-cy="assignedTo" name="assignedTo" formControlName="assignedTo">
+            <option [ngValue]="null"></option>
+            <option
+              [ngValue]="userOption.id === editForm.get('assignedTo')!.value?.id ? editForm.get('assignedTo')!.value : userOption"
+              *ngFor="let userOption of usersSharedCollection; trackBy: trackUserById"
+            >
+              {{ userOption.login }}
+            </option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label jhiTranslate="yuliqApp.carrito.producto" for="field_productos">Producto</label>
+          <select class="form-control" id="field_productos" data-cy="producto" multiple name="productos" formControlName="productos">
+            <option
+              [ngValue]="getSelectedProducto(productoOption, editForm.get('productos')!.value)"
+              *ngFor="let productoOption of productosSharedCollection; trackBy: trackProductoById"
+            >
+              {{ productoOption.id }}
+            </option>
+          </select>
+        </div>
+      </div>
+
+      <div>
+        <button type="button" id="cancel-save" class="btn btn-secondary" (click)="previousState()">
+          <fa-icon icon="ban"></fa-icon>&nbsp;<span jhiTranslate="entity.action.cancel">Cancel</span>
+        </button>
+
+        <button
+          type="submit"
+          id="save-entity"
+          data-cy="entityCreateSaveButton"
+          [disabled]="editForm.invalid || isSaving"
+          class="btn btn-primary"
+        >
+          <fa-icon icon="save"></fa-icon>&nbsp;<span jhiTranslate="entity.action.save">Save</span>
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

@@ -1,0 +1,47 @@
+<div class="row justify-content-center">
+  <div class="col-8">
+    <div *ngIf="carrito">
+      <h2 data-cy="carritoDetailsHeading"><span jhiTranslate="yuliqApp.carrito.detail.title">Carrito</span></h2>
+
+      <hr />
+
+      <jhi-alert-error></jhi-alert-error>
+
+      <jhi-alert></jhi-alert>
+
+      <dl class="row-md jh-entity-details">
+        <dt><span jhiTranslate="global.field.id">ID</span></dt>
+        <dd>
+          <span>{{ carrito.id }}</span>
+        </dd>
+        <dt><span jhiTranslate="yuliqApp.carrito.cantidad">Cantidad</span></dt>
+        <dd>
+          <span>{{ carrito.cantidad }}</span>
+        </dd>
+        <dt><span jhiTranslate="yuliqApp.carrito.fechaCarrito">Fecha Carrito</span></dt>
+        <dd>
+          <span>{{ carrito.fechaCarrito | formatMediumDatetime }}</span>
+        </dd>
+        <dt><span jhiTranslate="yuliqApp.carrito.assignedTo">Assigned To</span></dt>
+        <dd>
+          <span>{{ carrito.assignedTo?.login }}</span>
+        </dd>
+        <dt><span jhiTranslate="yuliqApp.carrito.producto">Producto</span></dt>
+        <dd>
+          <span *ngFor="let producto of carrito.productos; let last = last">
+            <a [routerLink]="['/producto', producto?.id, 'view']">{{ producto.id }}</a
+            >{{ last ? '' : ', ' }}
+          </span>
+        </dd>
+      </dl>
+
+      <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+        <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back">Back</span>
+      </button>
+
+      <button type="button" [routerLink]="['/carrito', carrito.id, 'edit']" class="btn btn-primary">
+        <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit">Edit</span>
+      </button>
+    </div>
+  </div>
+</div>

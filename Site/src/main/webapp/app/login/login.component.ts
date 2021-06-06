@@ -7,6 +7,7 @@ import { AccountService } from 'app/core/auth/account.service';
 @Component({
   selector: 'jhi-login',
   templateUrl: './login.component.html',
+  styleUrls: ['./login.component.scss'],
 })
 export class LoginComponent implements OnInit, AfterViewInit {
   @ViewChild('username', { static: false })

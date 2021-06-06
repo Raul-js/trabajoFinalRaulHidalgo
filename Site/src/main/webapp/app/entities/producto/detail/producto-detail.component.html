@@ -1,0 +1,61 @@
+<div class="row justify-content-center">
+  <div class="col-8">
+    <div *ngIf="producto">
+      <h2 data-cy="productoDetailsHeading"><span jhiTranslate="yuliqApp.producto.detail.title">Producto</span></h2>
+
+      <hr />
+
+      <jhi-alert-error></jhi-alert-error>
+
+      <jhi-alert></jhi-alert>
+
+      <dl class="row-md jh-entity-details">
+        <dt><span jhiTranslate="global.field.id">ID</span></dt>
+        <dd>
+          <span>{{ producto.id }}</span>
+        </dd>
+        <dt><span jhiTranslate="yuliqApp.producto.nombreProducto">Nombre Producto</span></dt>
+        <dd>
+          <span>{{ producto.nombreProducto }}</span>
+        </dd>
+        <dt><span jhiTranslate="yuliqApp.producto.calorias">Calorias</span></dt>
+        <dd>
+          <span>{{ producto.calorias }}</span>
+        </dd>
+        <dt><span jhiTranslate="yuliqApp.producto.imagen">Imagen</span></dt>
+        <dd>
+          <div *ngIf="producto.imagen">
+            <a (click)="openFile(producto.imagen, producto.imagenContentType)" jhiTranslate="entity.action.open">open</a>
+            {{ producto.imagenContentType }}, {{ byteSize(producto.imagen) }}
+          </div>
+        </dd>
+        <dt><span jhiTranslate="yuliqApp.producto.precio">Precio</span></dt>
+        <dd>
+          <span>{{ producto.precio }}</span>
+        </dd>
+        <dt><span jhiTranslate="yuliqApp.producto.existencias">Existencias</span></dt>
+        <dd>
+          <span>{{ producto.existencias }}</span>
+        </dd>
+        <dt><span jhiTranslate="yuliqApp.producto.tipoproducto">Tipoproducto</span></dt>
+        <dd>
+          <span jhiTranslate="{{ 'yuliqApp.TipoProducto.' + producto.tipoproducto }}">{{ producto.tipoproducto }}</span>
+        </dd>
+        <dt><span jhiTranslate="yuliqApp.producto.compra">Compra</span></dt>
+        <dd>
+          <div *ngIf="producto.compra">
+            <a [routerLink]="['/compra', producto.compra?.id, 'view']">{{ producto.compra?.id }}</a>
+          </div>
+        </dd>
+      </dl>
+
+      <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+        <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back">Back</span>
+      </button>
+
+      <button type="button" [routerLink]="['/producto', producto.id, 'edit']" class="btn btn-primary">
+        <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit">Edit</span>
+      </button>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,210 @@
+<div class="row justify-content-center">
+  <div class="col-8">
+    <form name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editForm">
+      <h2 id="jhi-producto-heading" data-cy="ProductoCreateUpdateHeading" jhiTranslate="yuliqApp.producto.home.createOrEditLabel">
+        Create or edit a Producto
+      </h2>
+
+      <div>
+        <jhi-alert-error></jhi-alert-error>
+
+        <div class="form-group" [hidden]="editForm.get('id')!.value == null">
+          <label class="form-control-label" jhiTranslate="global.field.id" for="field_id">ID</label>
+          <input type="number" class="form-control" name="id" id="field_id" data-cy="id" formControlName="id" [readonly]="true" />
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" jhiTranslate="yuliqApp.producto.nombreProducto" for="field_nombreProducto"
+            >Nombre Producto</label
+          >
+          <input
+            type="text"
+            class="form-control"
+            name="nombreProducto"
+            id="field_nombreProducto"
+            data-cy="nombreProducto"
+            formControlName="nombreProducto"
+          />
+          <div
+            *ngIf="
+              editForm.get('nombreProducto')!.invalid && (editForm.get('nombreProducto')!.dirty || editForm.get('nombreProducto')!.touched)
+            "
+          >
+            <small
+              class="form-text text-danger"
+              *ngIf="editForm.get('nombreProducto')?.errors?.required"
+              jhiTranslate="entity.validation.required"
+            >
+              This field is required.
+            </small>
+            <small
+              class="form-text text-danger"
+              *ngIf="editForm.get('nombreProducto')?.errors?.maxlength"
+              jhiTranslate="entity.validation.maxlength"
+              [translateValues]="{ max: 250 }"
+            >
+              This field cannot be longer than 250 characters.
+            </small>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" jhiTranslate="yuliqApp.producto.calorias" for="field_calorias">Calorias</label>
+          <input type="number" class="form-control" name="calorias" id="field_calorias" data-cy="calorias" formControlName="calorias" />
+          <div *ngIf="editForm.get('calorias')!.invalid && (editForm.get('calorias')!.dirty || editForm.get('calorias')!.touched)">
+            <small
+              class="form-text text-danger"
+              *ngIf="editForm.get('calorias')?.errors?.max"
+              jhiTranslate="entity.validation.max"
+              [translateValues]="{ max: 1000 }"
+            >
+              This field cannot be more than 1000.
+            </small>
+            <small
+              class="form-text text-danger"
+              [hidden]="!editForm.get('calorias')?.errors?.number"
+              jhiTranslate="entity.validation.number"
+            >
+              This field should be a number.
+            </small>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" jhiTranslate="yuliqApp.producto.imagen" for="field_imagen">Imagen</label>
+          <div>
+            <div *ngIf="editForm.get('imagen')!.value" class="form-text text-danger clearfix">
+              <a
+                class="pull-left"
+                (click)="openFile(editForm.get('imagen')!.value, editForm.get('imagenContentType')!.value)"
+                jhiTranslate="entity.action.open"
+                >open</a
+              ><br />
+              <span class="pull-left">{{ editForm.get('imagenContentType')!.value }}, {{ byteSize(editForm.get('imagen')!.value) }}</span>
+              <button
+                type="button"
+                (click)="editForm.patchValue({ imagen: null }); editForm.patchValue({ imagenContentType: null })"
+                class="btn btn-secondary btn-xs pull-right"
+              >
+                <fa-icon icon="times"></fa-icon>
+              </button>
+            </div>
+            <input
+              type="file"
+              id="file_imagen"
+              data-cy="imagen"
+              (change)="setFileData($event, 'imagen', false)"
+              jhiTranslate="entity.action.addblob"
+            />
+          </div>
+          <input type="hidden" class="form-control" name="imagen" id="field_imagen" data-cy="imagen" formControlName="imagen" />
+          <input
+            type="hidden"
+            class="form-control"
+            name="imagenContentType"
+            id="field_imagenContentType"
+            formControlName="imagenContentType"
+          />
+          <div *ngIf="editForm.get('imagen')!.invalid && (editForm.get('imagen')!.dirty || editForm.get('imagen')!.touched)"></div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" jhiTranslate="yuliqApp.producto.precio" for="field_precio">Precio</label>
+          <input type="number" class="form-control" name="precio" id="field_precio" data-cy="precio" formControlName="precio" />
+          <div *ngIf="editForm.get('precio')!.invalid && (editForm.get('precio')!.dirty || editForm.get('precio')!.touched)">
+            <small class="form-text text-danger" *ngIf="editForm.get('precio')?.errors?.required" jhiTranslate="entity.validation.required">
+              This field is required.
+            </small>
+            <small
+              class="form-text text-danger"
+              *ngIf="editForm.get('precio')?.errors?.max"
+              jhiTranslate="entity.validation.max"
+              [translateValues]="{ max: 200 }"
+            >
+              This field cannot be more than 200.
+            </small>
+            <small class="form-text text-danger" [hidden]="!editForm.get('precio')?.errors?.number" jhiTranslate="entity.validation.number">
+              This field should be a number.
+            </small>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" jhiTranslate="yuliqApp.producto.existencias" for="field_existencias">Existencias</label>
+          <input
+            type="number"
+            class="form-control"
+            name="existencias"
+            id="field_existencias"
+            data-cy="existencias"
+            formControlName="existencias"
+          />
+          <div *ngIf="editForm.get('existencias')!.invalid && (editForm.get('existencias')!.dirty || editForm.get('existencias')!.touched)">
+            <small
+              class="form-text text-danger"
+              *ngIf="editForm.get('existencias')?.errors?.required"
+              jhiTranslate="entity.validation.required"
+            >
+              This field is required.
+            </small>
+            <small
+              class="form-text text-danger"
+              *ngIf="editForm.get('existencias')?.errors?.max"
+              jhiTranslate="entity.validation.max"
+              [translateValues]="{ max: 50 }"
+            >
+              This field cannot be more than 50.
+            </small>
+            <small
+              class="form-text text-danger"
+              [hidden]="!editForm.get('existencias')?.errors?.number"
+              jhiTranslate="entity.validation.number"
+            >
+              This field should be a number.
+            </small>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" jhiTranslate="yuliqApp.producto.tipoproducto" for="field_tipoproducto">Tipoproducto</label>
+          <select class="form-control" name="tipoproducto" formControlName="tipoproducto" id="field_tipoproducto" data-cy="tipoproducto">
+            <option [ngValue]="null">{{ 'yuliqApp.TipoProducto.null' | translate }}</option>
+            <option value="ENTRANTE">{{ 'yuliqApp.TipoProducto.ENTRANTE' | translate }}</option>
+            <option value="PRINCIPAL">{{ 'yuliqApp.TipoProducto.PRINCIPAL' | translate }}</option>
+            <option value="POSTRE">{{ 'yuliqApp.TipoProducto.POSTRE' | translate }}</option>
+            <option value="BEBIDA">{{ 'yuliqApp.TipoProducto.BEBIDA' | translate }}</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" jhiTranslate="yuliqApp.producto.compra" for="field_compra">Compra</label>
+          <select class="form-control" id="field_compra" data-cy="compra" name="compra" formControlName="compra">
+            <option [ngValue]="null"></option>
+            <option
+              [ngValue]="compraOption.id === editForm.get('compra')!.value?.id ? editForm.get('compra')!.value : compraOption"
+              *ngFor="let compraOption of comprasSharedCollection; trackBy: trackCompraById"
+            >
+              {{ compraOption.id }}
+            </option>
+          </select>
+        </div>
+      </div>
+
+      <div>
+        <button type="button" id="cancel-save" class="btn btn-secondary" (click)="previousState()">
+          <fa-icon icon="ban"></fa-icon>&nbsp;<span jhiTranslate="entity.action.cancel">Cancel</span>
+        </button>
+
+        <button
+          type="submit"
+          id="save-entity"
+          data-cy="entityCreateSaveButton"
+          [disabled]="editForm.invalid || isSaving"
+          class="btn btn-primary"
+        >
+          <fa-icon icon="save"></fa-icon>&nbsp;<span jhiTranslate="entity.action.save">Save</span>
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

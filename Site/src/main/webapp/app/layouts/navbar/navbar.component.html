@@ -1,8 +1,8 @@
-<nav data-cy="navbar" class="navbar navbar-dark navbar-expand-md bg-primary">
+<nav data-cy="navbar" class="navbar navbar-expand-lg navbar-red navbar-dark">
+  <div class="wrapper"></div>
   <a class="navbar-brand logo" routerLink="/" (click)="collapseNavbar()">
     <span class="logo-img"></span>
-    <span jhiTranslate="global.title" class="navbar-title">Yuliq</span>
-    <span class="navbar-version">{{ version }}</span>
+    <span jhiTranslate="global.title" class="navbar-title">Yulia</span>
   </a>
   <a
     class="navbar-toggler d-lg-none"
@@ -19,10 +19,10 @@
   <div class="navbar-collapse collapse" id="navbarResponsive" [ngbCollapse]="isNavbarCollapsed" [ngSwitch]="isAuthenticated()">
     <ul class="navbar-nav ml-auto">
       <li class="nav-item" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
-        <a class="nav-link" routerLink="/" (click)="collapseNavbar()">
+        <a class="nav-link" routerLink="producto" (click)="collapseNavbar()">
           <span>
             <fa-icon icon="home"></fa-icon>
-            <span jhiTranslate="global.menu.home">Home</span>
+            <span jhiTranslate="global.menu.home">Tienda</span>
           </span>
         </a>
       </li>
@@ -42,6 +42,66 @@
           </span>
         </a>
         <ul class="dropdown-menu" ngbDropdownMenu aria-labelledby="entity-menu">
+          <li>
+            <a
+              class="dropdown-item"
+              routerLink="producto"
+              routerLinkActive="active"
+              [routerLinkActiveOptions]="{ exact: true }"
+              (click)="collapseNavbar()"
+            >
+              <fa-icon icon="asterisk" [fixedWidth]="true"></fa-icon>
+              <span jhiTranslate="global.menu.entities.producto">Producto</span>
+            </a>
+          </li>
+          <li>
+            <a
+              class="dropdown-item"
+              routerLink="banner"
+              routerLinkActive="active"
+              [routerLinkActiveOptions]="{ exact: true }"
+              (click)="collapseNavbar()"
+            >
+              <fa-icon icon="asterisk" [fixedWidth]="true"></fa-icon>
+              <span jhiTranslate="global.menu.entities.banner">Banner</span>
+            </a>
+          </li>
+          <li>
+            <a
+              class="dropdown-item"
+              routerLink="carrito"
+              routerLinkActive="active"
+              [routerLinkActiveOptions]="{ exact: true }"
+              (click)="collapseNavbar()"
+            >
+              <fa-icon icon="asterisk" [fixedWidth]="true"></fa-icon>
+              <span jhiTranslate="global.menu.entities.carrito">Carrito</span>
+            </a>
+          </li>
+          <li>
+            <a
+              class="dropdown-item"
+              routerLink="factura"
+              routerLinkActive="active"
+              [routerLinkActiveOptions]="{ exact: true }"
+              (click)="collapseNavbar()"
+            >
+              <fa-icon icon="asterisk" [fixedWidth]="true"></fa-icon>
+              <span jhiTranslate="global.menu.entities.factura">Factura</span>
+            </a>
+          </li>
+          <li>
+            <a
+              class="dropdown-item"
+              routerLink="compra"
+              routerLinkActive="active"
+              [routerLinkActiveOptions]="{ exact: true }"
+              (click)="collapseNavbar()"
+            >
+              <fa-icon icon="asterisk" [fixedWidth]="true"></fa-icon>
+              <span jhiTranslate="global.menu.entities.compra">Compra</span>
+            </a>
+          </li>
           <!-- jhipster-needle-add-entity-to-menu - JHipster will add entities to the menu here -->
         </ul>
       </li>
@@ -174,5 +234,6 @@
         </ul>
       </li>
     </ul>
+    <div class="d-flex flex-column sim"><span>1 item added to your quote</span> <small class="text-primary">view your quote</small></div>
   </div>
 </nav>
