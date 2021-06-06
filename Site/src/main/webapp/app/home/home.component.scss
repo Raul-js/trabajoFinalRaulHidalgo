@@ -1,192 +1,127 @@
-/* ==========================================================================
-Main page styles
-========================================================================== */
+$animation-timing: 27s;
+$carousel-items: 9;
+$animation-delay-fraction: $animation-timing / $carousel-items;
+$animation-steps-fraction: 100 / $carousel-items;
+$slide-change-timing: 3; // percentage of total animation cycle
 
-.hipster {
-  display: inline-block;
-  width: 347px;
-  height: 497px;
-  background: url('../../content/images/jhipster_family_member_0.svg') no-repeat center top;
-  background-size: contain;
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
 }
 
-/* wait autoprefixer update to allow simple generation of high pixel density media query */
-@media only screen and (-webkit-min-device-pixel-ratio: 2),
-  only screen and (-moz-min-device-pixel-ratio: 2),
-  only screen and (-o-min-device-pixel-ratio: 2/1),
-  only screen and (min-resolution: 192dpi),
-  only screen and (min-resolution: 2dppx) {
-  .hipster {
-    background: url('../../content/images/jhipster_family_member_0.svg') no-repeat center top;
-    background-size: contain;
+body {
+  font-family: 'Work Sans', sans-serif;
+  font-weight: 400;
+  height: 100vh;
+}
+
+.wrapper {
+  background: linear-gradient(60deg, #420285, #08bdbd);
+  height: 100%;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+
+.carousel {
+  position: relative;
+  width: 100%;
+  max-width: 500px;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+}
+
+.carousel__item {
+  display: flex;
+  align-items: center;
+  position: absolute;
+  width: 100%;
+  padding: 0 12px;
+  opacity: 0;
+  filter: drop-shadow(0 2px 2px #555);
+  will-change: transform, opacity;
+  animation: carousel-animate-vertical $animation-timing linear infinite;
+}
+
+@for $i from 1 through ($carousel-items - 1) {
+  .carousel__item:nth-child(#{$i}) {
+    animation-delay: calc(#{$animation-delay-fraction} * #{$i - 2});
   }
 }
-body {
-  color: #000;
-  overflow-x: hidden;
-  height: 100%;
-  background-color: #b0bec5;
-  background-repeat: no-repeat;
+
+.carousel__item:last-child {
+  animation-delay: calc(-#{$animation-delay-fraction} * 2);
 }
 
-.card0 {
-  box-shadow: 0px 4px 8px 0px #757575;
-  border-radius: 0px;
-}
+// example without negative delays
+// @for $i from 1 through ($carousel-items) {
+//   .carousel__item:nth-child(#{$i}) {
+//     animation-delay: calc(#{$animation-delay-fraction} * #{$i});
+//   }
+// }
 
-.card2 {
-  margin: 0px 40px;
-}
-
-.logo {
-  width: 200px;
-  height: 100px;
-  margin-top: 20px;
-  margin-left: 35px;
-}
-
-.image {
-  width: 360px;
-  height: 280px;
-}
-
-.border-line {
-  border-right: 1px solid #eeeeee;
-}
-
-.facebook {
-  background-color: #3b5998;
-  color: #fff;
-  font-size: 18px;
-  padding-top: 5px;
+.carousel__item-head {
   border-radius: 50%;
-  width: 35px;
-  height: 35px;
-  cursor: pointer;
+  background-color: #d7f7fc;
+  width: 90px;
+  height: 90px;
+  padding: 14px;
+  position: relative;
+  margin-right: -45px;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 50px;
 }
 
-.twitter {
-  background-color: #1da1f2;
-  color: #fff;
-  font-size: 18px;
-  padding-top: 5px;
-  border-radius: 50%;
-  width: 35px;
-  height: 35px;
-  cursor: pointer;
+.carousel__item-body {
+  width: 100%;
+  background-color: #fff;
+  border-radius: 8px;
+  padding: 16px 20px 16px 70px;
 }
 
-.linkedin {
-  background-color: #2867b2;
-  color: #fff;
-  font-size: 18px;
-  padding-top: 5px;
-  border-radius: 50%;
-  width: 35px;
-  height: 35px;
-  cursor: pointer;
-}
-
-.line {
-  height: 1px;
-  width: 45%;
-  background-color: #e0e0e0;
+.title {
+  text-transform: uppercase;
+  font-size: 20px;
   margin-top: 10px;
 }
 
-.or {
-  width: 10%;
-  font-weight: bold;
-}
-
-.text-sm {
-  font-size: 14px !important;
-}
-
-::placeholder {
-  color: #bdbdbd;
-  opacity: 1;
-  font-weight: 300;
-}
-
-:-ms-input-placeholder {
-  color: #bdbdbd;
-  font-weight: 300;
-}
-
-::-ms-input-placeholder {
-  color: #bdbdbd;
-  font-weight: 300;
-}
-
-input,
-textarea {
-  padding: 10px 12px 10px 12px;
-  border: 1px solid lightgrey;
-  border-radius: 2px;
-  margin-bottom: 5px;
-  margin-top: 2px;
-  width: 100%;
-  box-sizing: border-box;
-  color: #2c3e50;
-  font-size: 14px;
-  letter-spacing: 1px;
-}
-
-input:focus,
-textarea:focus {
-  -moz-box-shadow: none !important;
-  -webkit-box-shadow: none !important;
-  box-shadow: none !important;
-  border: 1px solid #304ffe;
-  outline-width: 0;
-}
-
-button:focus {
-  -moz-box-shadow: none !important;
-  -webkit-box-shadow: none !important;
-  box-shadow: none !important;
-  outline-width: 0;
-}
-
-a {
-  color: inherit;
-  cursor: pointer;
-}
-
-.btn-blue {
-  background-color: #1a237e;
-  width: 150px;
-  color: #fff;
-  border-radius: 2px;
-}
-
-.btn-blue:hover {
-  background-color: #000;
-  cursor: pointer;
-}
-
-.bg-blue {
-  color: #fff;
-  background-color: #1a237e;
-}
-
-@media screen and (max-width: 991px) {
-  .logo {
-    margin-left: 0px;
+@keyframes carousel-animate-vertical {
+  0% {
+    transform: translateY(100%) scale(0.5);
+    opacity: 0;
+    visibility: hidden;
   }
-
-  .image {
-    width: 300px;
-    height: 220px;
+  #{$slide-change-timing}%,
+  #{$animation-steps-fraction}% {
+    transform: translateY(100%) scale(0.7);
+    opacity: 0.4;
+    visibility: visible;
   }
-
-  .border-line {
-    border-right: none;
+  #{$animation-steps-fraction + $slide-change-timing}%,
+  #{$animation-steps-fraction * 2}% {
+    transform: translateY(0) scale(1);
+    opacity: 1;
+    visibility: visible;
   }
-
-  .card2 {
-    border-top: 1px solid #eeeeee !important;
-    margin: 0px 15px;
+  #{($animation-steps-fraction * 2) + $slide-change-timing}%,
+  #{$animation-steps-fraction * 3}% {
+    transform: translateY(-100%) scale(0.7);
+    opacity: 0.4;
+    visibility: visible;
+  }
+  #{($animation-steps-fraction * 3) + $slide-change-timing}% {
+    transform: translateY(-100%) scale(0.5);
+    opacity: 0;
+    visibility: visible;
+  }
+  100% {
+    transform: translateY(-100%) scale(0.5);
+    opacity: 0;
+    visibility: hidden;
   }
 }

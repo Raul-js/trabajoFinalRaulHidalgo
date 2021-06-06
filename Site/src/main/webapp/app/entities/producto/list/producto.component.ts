@@ -12,10 +12,12 @@ import { ProductoDeleteDialogComponent } from '../delete/producto-delete-dialog.
 import { DataUtils } from 'app/core/util/data-util.service';
 import { ProductoFilter } from './producto-filter.model';
 import { FormBuilder } from '@angular/forms';
+import { ParseLinks } from 'app/core/util/parse-links.service';
 
 @Component({
   selector: 'jhi-producto',
   templateUrl: './producto.component.html',
+  styleUrls: ['./producto.component.scss'],
 })
 export class ProductoComponent implements OnInit {
   productos?: IProducto[];
@@ -26,8 +28,10 @@ export class ProductoComponent implements OnInit {
   predicate!: string;
   ascending!: boolean;
   ngbPaginationPage = 1;
+  isHidden = true;
   isFiltring = false;
   areFiltersCollapsed = true;
+  links: { [key: string]: number };
   filterForm = this.fb.group({
     nombre: [],
     calorias: [],
@@ -41,13 +45,18 @@ export class ProductoComponent implements OnInit {
   productosSharedCollection: IProducto[] = [];
 
   constructor(
+    protected parseLinks: ParseLinks,
     protected productoService: ProductoService,
     protected activatedRoute: ActivatedRoute,
     protected dataUtils: DataUtils,
     protected router: Router,
     protected modalService: NgbModal,
     protected fb: FormBuilder
-  ) {}
+  ) {
+    this.links = {
+      last: 0,
+    };
+  }
 
   filter(): void {
     this.isFiltring = true;

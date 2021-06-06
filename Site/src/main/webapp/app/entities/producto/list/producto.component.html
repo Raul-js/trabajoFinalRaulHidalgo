@@ -2,7 +2,7 @@
   <h2 id="page-heading" data-cy="ProductoHeading">
     <span jhiTranslate="yuliqApp.producto.home.title">Productos</span>
 
-    <div class="d-flex justify-content-end">
+    <div class="d-flex justify-content-end" *jhiHasAnyAuthority="'ROLE_ADMIN'">
       <button class="btn btn-info mr-2" (click)="loadPage()" [disabled]="isLoading">
         <fa-icon icon="sync" [spin]="isLoading"></fa-icon>
         <span jhiTranslate="yuliqApp.producto.home.refreshListLabel">Refresh List</span>
@@ -47,7 +47,7 @@
         </div>
       </div>
     </div>
-    <div class="card-body" [ngbCollapse]="areFiltersCollapsed">
+    <div class="card-body" [ngbCollapse]="areFiltersCollapsed" *ngIf="isHidden">
       <form name="filterform" role="form" novalidate [formGroup]="filterForm" class="busqueda">
         <div class="row align-items-end">
           <div class="col-md-4">
@@ -92,7 +92,7 @@
   <span jhiTranslate="yuliqApp.producto.home.notFound">No productos found</span>
 </div>
 <button (click)="exportPdf()"></button>
-<div class="table-responsive" id="entities" *ngIf="productos && productos.length > 0">
+<div class="dark" id="entities" *ngIf="productos && productos.length > 0">
   <table class="table table-striped" aria-describedby="page-heading">
     <thead>
       <tr jhiSort [(predicate)]="predicate" [(ascending)]="ascending" [callback]="loadPage.bind(this)">
@@ -190,6 +190,62 @@
     <jhi-item-count [params]="{ page: page, totalItems: totalItems, itemsPerPage: itemsPerPage }"></jhi-item-count>
   </div>
 
+  <div class="row justify-content-center">
+    <ngb-pagination
+      [collectionSize]="totalItems"
+      [(page)]="ngbPaginationPage"
+      [pageSize]="itemsPerPage"
+      [maxSize]="5"
+      [rotate]="true"
+      [boundaryLinks]="true"
+      (pageChange)="loadPage($event)"
+    ></ngb-pagination>
+  </div>
+</div>
+<div style="background-image: url(../../../../swagger-ui/dist/images/tickets_restaurant-2-920x385.jpg)">
+  <main class="container py-4" *ngFor="let producto of productos">
+    <article class="postcard dark blue" jhiSort [(predicate)]="predicate" [(ascending)]="ascending" [callback]="loadPage.bind(this)">
+      <a class="postcard__img_link" href="#">
+        <img class="postcard__img" src="https://picsum.photos/1000/1000" alt="Image Title" />
+      </a>
+      <div class="postcard__text">
+        <h1 class="postcard__title blue">
+          <a href="#">{{ producto.nombreProducto }}</a>
+        </h1>
+        <div class="postcard__subtitle small">
+          <h4>{{ producto.precio }}€</h4>
+        </div>
+        <div class="postcard__bar"></div>
+        <div class="postcard__preview-txt">
+          Este producto de la categoría {{ producto.tipoproducto }}, contiene {{ producto.calorias }} calorías
+        </div>
+        <ul class="postcard__tagbox">
+          <li class="tag__item play blue">
+            <button
+              type="submit"
+              [routerLink]="['/producto', producto.id, 'view']"
+              class="btn btn-info btn-sm"
+              data-cy="entityDetailsButton"
+            >
+              <fa-icon icon="eye"></fa-icon>
+              <span class="d-none d-md-inline" jhiTranslate="entity.action.view">View</span>
+            </button>
+          </li>
+          <li class="tag__item play blue">
+            <button
+              type="submit"
+              [routerLink]="['/producto', producto.id, 'view']"
+              class="btn btn-info btn-sm"
+              data-cy="entityDetailsButton"
+            >
+              <fa-icon icon="eye"></fa-icon>
+              <span class="d-none d-md-inline">Añadir a la cesta</span>
+            </button>
+          </li>
+        </ul>
+      </div>
+    </article>
+  </main>
   <div class="row justify-content-center">
     <ngb-pagination
       [collectionSize]="totalItems"
