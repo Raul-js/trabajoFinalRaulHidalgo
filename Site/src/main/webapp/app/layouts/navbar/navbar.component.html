@@ -2,8 +2,7 @@
   <div class="wrapper"></div>
   <a class="navbar-brand logo" routerLink="/" (click)="collapseNavbar()">
     <span class="logo-img"></span>
-    <span jhiTranslate="global.title" class="navbar-title">Yuliq</span>
-    <span class="navbar-version">{{ version }}</span>
+    <span jhiTranslate="global.title" class="navbar-title">Yulia</span>
   </a>
   <a
     class="navbar-toggler d-lg-none"
@@ -20,10 +19,10 @@
   <div class="navbar-collapse collapse" id="navbarResponsive" [ngbCollapse]="isNavbarCollapsed" [ngSwitch]="isAuthenticated()">
     <ul class="navbar-nav ml-auto">
       <li class="nav-item" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
-        <a class="nav-link" routerLink="/" (click)="collapseNavbar()">
+        <a class="nav-link" routerLink="producto" (click)="collapseNavbar()">
           <span>
             <fa-icon icon="home"></fa-icon>
-            <span jhiTranslate="global.menu.home">Home</span>
+            <span jhiTranslate="global.menu.home">Tienda</span>
           </span>
         </a>
       </li>

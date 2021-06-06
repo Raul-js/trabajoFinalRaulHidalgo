@@ -24,7 +24,14 @@
   left: 8%;
   top: 30px;
 }
-
+@media (max-width: 700px) {
+  div {
+    font-size: 10px;
+  }
+}
+button {
+  background-color: #f03c01;
+}
 #sitelink {
   font-size: 35px;
   color: #f44336;

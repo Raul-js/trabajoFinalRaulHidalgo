@@ -23,7 +23,7 @@
   <jhi-alert-error></jhi-alert-error>
 
   <jhi-alert></jhi-alert>
-
+  <button class="btn btn-danger" (click)="exportPdf()">PDF</button>
   <div class="card">
     <div class="card-header">
       <div class="row align-items-baseline" [ngClass]="{ 'is-last-child': areFiltersCollapsed }">
@@ -90,7 +90,7 @@
           <fa-icon icon="sort"></fa-icon>
         </th>
         <th scope="col" jhiSortBy="assignedTo.login">
-          <span jhiTranslate="yuliqApp.factura.assignedTo">Assigned To</span>
+          <span jhiTranslate="yuliqApp.factura.assignedTo">Asignado a</span>
           <fa-icon icon="sort"></fa-icon>
         </th>
         <th scope="col"></th>
@@ -113,14 +113,15 @@
               <span class="d-none d-md-inline" jhiTranslate="entity.action.view">View</span>
             </button>
 
-            <button type="submit" [routerLink]="['/factura', factura.id, 'edit']" class="btn btn-primary btn-sm" data-cy="entityEditButton">
+            <button
+              *jhiHasAnyAuthority="'ROLE_ADMIN'"
+              type="submit"
+              [routerLink]="['/factura', factura.id, 'edit']"
+              class="btn btn-primary btn-sm"
+              data-cy="entityEditButton"
+            >
               <fa-icon icon="pencil-alt"></fa-icon>
               <span class="d-none d-md-inline" jhiTranslate="entity.action.edit">Edit</span>
-            </button>
-
-            <button type="submit" (click)="delete(factura)" class="btn btn-danger btn-sm" data-cy="entityDeleteButton">
-              <fa-icon icon="times"></fa-icon>
-              <span class="d-none d-md-inline" jhiTranslate="entity.action.delete">Delete</span>
             </button>
           </div>
         </td>

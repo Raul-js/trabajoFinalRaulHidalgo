@@ -6,7 +6,7 @@ import { RouterModule } from '@angular/router';
     RouterModule.forChild([
       {
         path: 'producto',
-        data: { pageTitle: 'yuliqApp.producto.home.title' },
+        data: { pageTitle: 'yuliqApp.producto.home.title', defaultSort: 'nombreProducto,asc' },
         loadChildren: () => import('./producto/producto.module').then(m => m.ProductoModule),
       },
       {

@@ -23,19 +23,34 @@
   <jhi-alert-error></jhi-alert-error>
 
   <jhi-alert></jhi-alert>
-
+  <button class="btn btn-danger" (click)="exportPdf()">PDF</button>
   <div class="card">
     <div class="card-header">
       <div class="row align-items-baseline" [ngClass]="{ 'is-last-child': areFiltersCollapsed }">
         <div class="col-5">
-          <span>Filtros</span>
+          <span jhiTranslate="yuliqApp.producto.table">Ver tabla de productos</span>
           <fa-icon style="color: #6aaadf" *ngIf="!isFiltring" [icon]="'filter'"></fa-icon>
           <fa-icon style="color: white" *ngIf="isFiltring" [icon]="'filter'"></fa-icon>
         </div>
 
         <div class="col-7 d-flex justify-content-end">
-          <button type="button" *ngIf="!areFiltersCollapsed" class="btn btn-filtrar" (click)="filter()">Filtrar</button>
-          <button type="button" *ngIf="!areFiltersCollapsed" class="btn btn-limpiar" (click)="resetFilter()" [disabled]="!isFiltring">
+          <button
+            type="button"
+            *ngIf="!areFiltersCollapsed"
+            jhiTranslate="yuliqApp.producto.filter"
+            class="btn btn-filtrar"
+            (click)="filter()"
+          >
+            Filtrar
+          </button>
+          <button
+            type="button"
+            *ngIf="!areFiltersCollapsed"
+            jhiTranslate="yuliqApp.producto.clean"
+            class="btn btn-limpiar"
+            (click)="resetFilter()"
+            [disabled]="!isFiltring"
+          >
             Limpiar
           </button>
           <button type="button" class="btn btn-filtro" *ngIf="areFiltersCollapsed" (click)="areFiltersCollapsed = false">
@@ -64,147 +79,71 @@
             <label class="form-control-label" for="precio"><span jhiTranslate="yuliqApp.producto.precio">Precio inferior a</span></label>
             <input type="text" class="form-control" id="precio" formControlName="precio" />
           </div>
+        </div>
+        <div id="entities" *ngIf="productos && productos.length > 0">
+          <table class="table table-striped" aria-describedby="page-heading">
+            <thead>
+              <tr jhiSort [(predicate)]="predicate" [(ascending)]="ascending" [callback]="loadPage.bind(this)">
+                <th scope="col" jhiSortBy="nombreProducto">
+                  <span jhiTranslate="yuliqApp.producto.nombreProducto">Nombre</span>
+                  <fa-icon icon="sort"></fa-icon>
+                </th>
+                <th scope="col" jhiSortBy="calorias">
+                  <span jhiTranslate="yuliqApp.producto.calorias">Calorias</span>
+                  <fa-icon icon="sort"></fa-icon>
+                </th>
 
-          <div class="col-md-2">
-            <label class="form-control-label" for="tipo"><span jhiTranslate="yuliqApp.producto.tipoproducto">Tipo</span></label>
-            <input
-              type="text"
-              class="form-control"
-              id="tipo"
-              formControlName="tipo"
-              placeholder="Escribe:BEBIDA,ENTRANTE,PRINCIPAL O POSTRE"
-            />
-          </div>
+                <th scope="col" jhiSortBy="precio">
+                  <span jhiTranslate="yuliqApp.producto.precio">Precio</span>
+                  <fa-icon icon="sort"></fa-icon>
+                </th>
 
-          <div class="col-md-2">
-            <label class="form-control-label" for="existencias"
-              ><span jhiTranslate="yuliqApp.producto.existencias">Existencias</span></label
-            >
-            <input type="text" class="form-control" id="existencias" formControlName="existencias" />
-          </div>
+                <th scope="col"></th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let producto of productos; trackBy: trackId" data-cy="entityTable">
+                <td>{{ producto.nombreProducto }}</td>
+                <td>{{ producto.calorias }}</td>
+
+                <td>{{ producto.precio }}</td>
+
+                <td jhiTranslate="{{ 'yuliqApp.TipoProducto.' + producto.tipoproducto }}">{{ producto.tipoproducto }}</td>
+
+                <td class="text-right">
+                  <div class="btn-group">
+                    <button
+                      *jhiHasAnyAuthority="'ROLE_ADMIN'"
+                      type="submit"
+                      [routerLink]="['/producto', producto.id, 'edit']"
+                      class="btn btn-primary btn-sm"
+                      data-cy="entityEditButton"
+                    >
+                      <fa-icon icon="pencil-alt"></fa-icon>
+                      <span class="d-none d-md-inline" jhiTranslate="entity.action.edit">Edit</span>
+                    </button>
+                  </div>
+                </td>
+              </tr>
+            </tbody>
+          </table>
         </div>
       </form>
     </div>
   </div>
 </div>
 
-<div class="alert alert-warning" id="no-result" *ngIf="productos?.length === 0">
-  <span jhiTranslate="yuliqApp.producto.home.notFound">No productos found</span>
-</div>
-<button (click)="exportPdf()"></button>
-<div class="dark" id="entities" *ngIf="productos && productos.length > 0">
-  <table class="table table-striped" aria-describedby="page-heading">
-    <thead>
-      <tr jhiSort [(predicate)]="predicate" [(ascending)]="ascending" [callback]="loadPage.bind(this)">
-        <th scope="col" jhiSortBy="id">
-          <span jhiTranslate="global.field.id">ID</span>
-          <fa-icon icon="sort"></fa-icon>
-        </th>
-        <th scope="col" jhiSortBy="nombreProducto">
-          <span jhiTranslate="yuliqApp.producto.nombreProducto">Nombre Producto</span>
-          <fa-icon icon="sort"></fa-icon>
-        </th>
-        <th scope="col" jhiSortBy="calorias">
-          <span jhiTranslate="yuliqApp.producto.calorias">Calorias</span>
-          <fa-icon icon="sort"></fa-icon>
-        </th>
-        <th scope="col" jhiSortBy="imagen">
-          <span jhiTranslate="yuliqApp.producto.imagen">Imagen</span>
-          <fa-icon icon="sort"></fa-icon>
-        </th>
-        <th scope="col" jhiSortBy="precio">
-          <span jhiTranslate="yuliqApp.producto.precio">Precio</span>
-          <fa-icon icon="sort"></fa-icon>
-        </th>
-        <th scope="col" jhiSortBy="existencias">
-          <span jhiTranslate="yuliqApp.producto.existencias">Existencias</span>
-          <fa-icon icon="sort"></fa-icon>
-        </th>
-        <th scope="col" jhiSortBy="tipoproducto">
-          <span jhiTranslate="yuliqApp.producto.tipoproducto">Tipoproducto</span>
-          <fa-icon icon="sort"></fa-icon>
-        </th>
-        <th scope="col" jhiSortBy="compra.id">
-          <span jhiTranslate="yuliqApp.producto.compra">Compra</span>
-          <fa-icon icon="sort"></fa-icon>
-        </th>
-        <th scope="col"></th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr *ngFor="let producto of productos; trackBy: trackId" data-cy="entityTable">
-        <td>
-          <a [routerLink]="['/producto', producto.id, 'view']">{{ producto.id }}</a>
-        </td>
-        <td>{{ producto.nombreProducto }}</td>
-        <td>{{ producto.calorias }}</td>
-        <td>
-          <a *ngIf="producto.imagen" (click)="openFile(producto.imagen, producto.imagenContentType)" jhiTranslate="entity.action.open"
-            >open</a
-          >
-          <span *ngIf="producto.imagen">{{ producto.imagenContentType }}, {{ byteSize(producto.imagen) }}</span>
-        </td>
-        <td>{{ producto.precio }}</td>
-        <td>{{ producto.existencias }}</td>
-        <td jhiTranslate="{{ 'yuliqApp.TipoProducto.' + producto.tipoproducto }}">{{ producto.tipoproducto }}</td>
-        <td>
-          <div *ngIf="producto.compra">
-            <a [routerLink]="['/compra', producto.compra?.id, 'view']">{{ producto.compra?.id }}</a>
-          </div>
-        </td>
-        <td class="text-right">
-          <div class="btn-group">
-            <button
-              type="submit"
-              [routerLink]="['/producto', producto.id, 'view']"
-              class="btn btn-info btn-sm"
-              data-cy="entityDetailsButton"
-            >
-              <fa-icon icon="eye"></fa-icon>
-              <span class="d-none d-md-inline" jhiTranslate="entity.action.view">View</span>
-            </button>
-
-            <button
-              type="submit"
-              [routerLink]="['/producto', producto.id, 'edit']"
-              class="btn btn-primary btn-sm"
-              data-cy="entityEditButton"
-            >
-              <fa-icon icon="pencil-alt"></fa-icon>
-              <span class="d-none d-md-inline" jhiTranslate="entity.action.edit">Edit</span>
-            </button>
-
-            <button type="submit" (click)="delete(producto)" class="btn btn-danger btn-sm" data-cy="entityDeleteButton">
-              <fa-icon icon="times"></fa-icon>
-              <span class="d-none d-md-inline" jhiTranslate="entity.action.delete">Delete</span>
-            </button>
-          </div>
-        </td>
-      </tr>
-    </tbody>
-  </table>
-</div>
-
-<div *ngIf="productos && productos.length > 0">
-  <div class="row justify-content-center">
-    <jhi-item-count [params]="{ page: page, totalItems: totalItems, itemsPerPage: itemsPerPage }"></jhi-item-count>
-  </div>
-
-  <div class="row justify-content-center">
-    <ngb-pagination
-      [collectionSize]="totalItems"
-      [(page)]="ngbPaginationPage"
-      [pageSize]="itemsPerPage"
-      [maxSize]="5"
-      [rotate]="true"
-      [boundaryLinks]="true"
-      (pageChange)="loadPage($event)"
-    ></ngb-pagination>
-  </div>
-</div>
 <div style="background-image: url(../../../../swagger-ui/dist/images/tickets_restaurant-2-920x385.jpg)">
   <main class="container py-4" *ngFor="let producto of productos">
-    <article class="postcard dark blue" jhiSort [(predicate)]="predicate" [(ascending)]="ascending" [callback]="loadPage.bind(this)">
+    <article
+      class="postcard dark blue"
+      [ngbCollapse]="areFiltersCollapsed"
+      *ngIf="isHidden"
+      jhiSort
+      [(predicate)]="predicate"
+      [(ascending)]="ascending"
+      [callback]="loadPage.bind(this)"
+    >
       <a class="postcard__img_link" href="#">
         <img class="postcard__img" src="https://picsum.photos/1000/1000" alt="Image Title" />
       </a>
@@ -228,18 +167,18 @@
               data-cy="entityDetailsButton"
             >
               <fa-icon icon="eye"></fa-icon>
-              <span class="d-none d-md-inline" jhiTranslate="entity.action.view">View</span>
+              <span *jhiHasAnyAuthority="'ROLE_ADMIN'" class="d-none d-md-inline" jhiTranslate="entity.action.view">View</span>
             </button>
           </li>
           <li class="tag__item play blue">
             <button
+              *jhiHasAnyAuthority="'ROLE_USER'"
               type="submit"
               [routerLink]="['/producto', producto.id, 'view']"
               class="btn btn-info btn-sm"
               data-cy="entityDetailsButton"
             >
-              <fa-icon icon="eye"></fa-icon>
-              <span class="d-none d-md-inline">Añadir a la cesta</span>
+              <span [ngSwitch]="isAuthenticated()" class="d-none d-md-inline">Añadir a la cesta</span>
             </button>
           </li>
         </ul>

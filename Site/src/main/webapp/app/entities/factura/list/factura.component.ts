@@ -37,6 +37,8 @@ export class FacturaComponent implements OnInit {
   });
   filtros: FacturaFilter = new FacturaFilter();
   facturasSharedCollection: IFactura[] = [];
+  cols?: any[];
+  exportColumns?: any[];
 
   constructor(
     protected facturaService: FacturaService,
@@ -86,6 +88,12 @@ export class FacturaComponent implements OnInit {
 
   ngOnInit(): void {
     this.handleNavigation();
+    this.cols = [
+      { field: 'id', header: 'Id' },
+      { field: 'fechaFactura', header: 'FechaFactura' },
+      { field: 'cantidadPagada', header: 'Cantidad' },
+    ];
+    this.exportColumns = this.cols.map(col => ({ title: col.header, dataKey: col.field }));
   }
 
   trackId(index: number, item: IFactura): number {
@@ -123,6 +131,15 @@ export class FacturaComponent implements OnInit {
         this.ascending = ascending;
         this.loadPage(pageNumber, true);
       }
+    });
+  }
+  exportPdf() {
+    import('jspdf').then(jsPDF => {
+      import('jspdf-autotable').then(x => {
+        const doc = new jsPDF.default();
+        (doc as any).autoTable(this.exportColumns, this.facturas);
+        doc.save('fact.pdf');
+      });
     });
   }
 

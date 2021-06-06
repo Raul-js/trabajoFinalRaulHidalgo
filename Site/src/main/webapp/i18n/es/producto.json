@@ -25,7 +25,10 @@
       "existencias": "Existencias",
       "tipoproducto": "Tipoproducto",
       "compra": "Compra",
-      "carrito": "Carrito"
+      "carrito": "Carrito",
+      "clean": "Clean",
+      "filter": "Filter",
+      "table": "View table"
     }
   }
 }

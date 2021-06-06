@@ -13,6 +13,10 @@ import { DataUtils } from 'app/core/util/data-util.service';
 import { ProductoFilter } from './producto-filter.model';
 import { FormBuilder } from '@angular/forms';
 import { ParseLinks } from 'app/core/util/parse-links.service';
+import { LoginService } from 'app/login/login.service';
+import { SessionStorageService } from 'ngx-webstorage';
+import { AccountService } from 'app/core/auth/account.service';
+import { ProfileService } from 'app/layouts/profiles/profile.service';
 
 @Component({
   selector: 'jhi-producto',
@@ -51,7 +55,12 @@ export class ProductoComponent implements OnInit {
     protected dataUtils: DataUtils,
     protected router: Router,
     protected modalService: NgbModal,
-    protected fb: FormBuilder
+    protected fb: FormBuilder,
+    private loginService: LoginService,
+
+    private sessionStorage: SessionStorageService,
+    private accountService: AccountService,
+    private profileService: ProfileService
   ) {
     this.links = {
       last: 0,
@@ -69,6 +78,10 @@ export class ProductoComponent implements OnInit {
     this.isFiltring = false;
     this.filterForm.reset();
     this.loadPage();
+  }
+
+  isAuthenticated(): boolean {
+    return this.accountService.isAuthenticated();
   }
   clear(): void {
     this.resetFilter();

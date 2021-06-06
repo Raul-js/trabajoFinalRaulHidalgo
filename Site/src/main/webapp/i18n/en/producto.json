@@ -2,11 +2,12 @@
   "yuliqApp": {
     "producto": {
       "home": {
-        "title": "Productos",
+        "title": "Products",
         "refreshListLabel": "Refresh list",
         "createLabel": "Create a new Producto",
         "createOrEditLabel": "Create or edit a Producto",
-        "notFound": "No Productos found"
+        "notFound": "No Productos found",
+        "cerveza": "beer"
       },
       "created": "A new Producto is created with identifier {{ param }}",
       "updated": "A Producto is updated with identifier {{ param }}",
@@ -15,18 +16,20 @@
         "question": "Are you sure you want to delete Producto {{ id }}?"
       },
       "detail": {
-        "title": "Producto"
+        "title": "Products"
       },
       "id": "ID",
-      "nombreProducto": "Nombre Producto",
-      "calorias": "Calorias",
+      "nombreProducto": "Name",
+      "calorias": "Calories",
       "imagen": "Imagen",
-      "precio": "Precio",
-      "existencias": "Existencias",
-      "tipoproducto": "Tipoproducto",
-      "compra": "Compra",
-      "carrito": "Carrito",
-      "clean": "Limpiar"
+      "precio": "Price",
+      "existencias": "Stock",
+      "tipoproducto": "Product type",
+      "compra": "Order",
+      "carrito": "Trolley",
+      "clean": "Clean",
+      "filter": "filter",
+      "table": "View table"
     }
   }
 }

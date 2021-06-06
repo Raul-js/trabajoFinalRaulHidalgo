@@ -7,12 +7,14 @@
       "jhipster-needle-menu-add-element": "JHipster will add additional menu entries here (do not translate!)",
       "entities": {
         "main": "Entities",
-        "producto": "Producto",
+        "producto": "Product",
         "banner": "Banner",
         "carrito": "Carrito",
         "factura": "Factura",
         "compra": "Compra",
-        "jhipster-needle-menu-add-entry": "JHipster will add additional entities here (do not translate!)"
+        "jhipster-needle-menu-add-entry": "JHipster will add additional entities here (do not translate!)",
+        "espanyol": "Spanish",
+        "English": "English"
       },
       "account": {
         "main": "Account",
